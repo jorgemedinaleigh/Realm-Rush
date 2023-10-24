@@ -10,7 +10,7 @@ public class EnemyController : MonoBehaviour
     
     int currentHealth;
 
-    void Start()
+    void OnEnable()
     {        
         currentHealth = maxHealth;
 
@@ -30,7 +30,7 @@ public class EnemyController : MonoBehaviour
 
         if(currentHealth <= 0)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
@@ -69,6 +69,6 @@ public class EnemyController : MonoBehaviour
             }            
         }
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
