@@ -7,8 +7,11 @@ public class EnemyController : MonoBehaviour
     [SerializeField] List<Waypoint> path = new List<Waypoint>();
     [SerializeField] [Range(0f, 10f)] float speed = 1f;
     [SerializeField] int maxHealth = 5;
+    [SerializeField] int goldReward = 25;
+    [SerializeField] int goldPenalty = 25;
     
     int currentHealth;
+    BankController bank;
 
     void OnEnable()
     {        
@@ -17,6 +20,31 @@ public class EnemyController : MonoBehaviour
         FindPath();
         GoToStart();
         StartCoroutine(FollowPath());
+    }
+
+    void Start()
+    {
+        bank = FindFirstObjectByType<BankController>();
+    }
+
+    public void RewardGold()
+    {
+        if(bank == null)
+        {
+            return;
+        }
+
+        bank.Deposit(goldReward);
+    }
+
+    public void StealGold()
+    {
+        if(bank == null)
+        {
+            return;
+        }
+
+        bank.Withdraw(goldPenalty);
     }
 
     private void OnParticleCollision(GameObject other) 
@@ -30,6 +58,7 @@ public class EnemyController : MonoBehaviour
 
         if(currentHealth <= 0)
         {
+            RewardGold();
             gameObject.SetActive(false);
         }
     }
@@ -69,6 +98,7 @@ public class EnemyController : MonoBehaviour
             }            
         }
 
+        StealGold();
         gameObject.SetActive(false);
     }
 }
