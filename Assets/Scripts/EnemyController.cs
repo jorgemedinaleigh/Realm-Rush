@@ -6,10 +6,49 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] List<Waypoint> path = new List<Waypoint>();
     [SerializeField] [Range(0f, 10f)] float speed = 1f;
+    [SerializeField] int maxHealth = 5;
+    
+    int currentHealth;
 
     void Start()
-    {
+    {        
+        currentHealth = maxHealth;
+
+        FindPath();
+        GoToStart();
         StartCoroutine(FollowPath());
+    }
+
+    private void OnParticleCollision(GameObject other) 
+    {
+        ProcessHit();    
+    }
+
+    void ProcessHit()
+    {
+        currentHealth--;
+
+        if(currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void FindPath()
+    {
+        path.Clear();
+
+        GameObject[] waypoints = GameObject.FindGameObjectsWithTag("Path");
+
+        foreach(GameObject waypoint in waypoints)
+        {
+            path.Add(waypoint.GetComponent<Waypoint>());
+        }
+    }
+
+    void GoToStart()
+    {
+        transform.position = path[0].transform.position;
     }
 
     IEnumerator FollowPath()
@@ -29,5 +68,7 @@ public class EnemyController : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }            
         }
+
+        Destroy(gameObject);
     }
 }

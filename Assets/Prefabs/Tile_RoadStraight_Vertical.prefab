@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile_RoadStraight_Vertical
       objectReference: {fileID: 0}
+    - target: {fileID: 3165295205173061314, guid: 1fe31fcaa7b995e4c96cfa2494e78caf, type: 3}
+      propertyPath: m_TagString
+      value: Path
+      objectReference: {fileID: 0}
     - target: {fileID: 6844552020590609890, guid: 1fe31fcaa7b995e4c96cfa2494e78caf, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
