@@ -151,5 +151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: []
-  speed: 1
-  maxHealth: 5
+  speed: 0.5
+  maxHealth: 3
+  difficultyRamp: 1
+  goldReward: 25
+  goldPenalty: 25

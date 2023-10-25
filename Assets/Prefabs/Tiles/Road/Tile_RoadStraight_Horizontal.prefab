@@ -76,6 +76,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile_RoadStraight_Horizontal
       objectReference: {fileID: 0}
+    - target: {fileID: 9131221797327579298, guid: f5e493e38e376ff449cc131552387a8b, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

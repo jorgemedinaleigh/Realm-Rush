@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] List<Waypoint> path = new List<Waypoint>();
     [SerializeField] [Range(0f, 10f)] float speed = 1f;
     [SerializeField] int maxHealth = 5;
+    [SerializeField] int difficultyRamp = 1;
     [SerializeField] int goldReward = 25;
     [SerializeField] int goldPenalty = 25;
     
@@ -59,6 +60,7 @@ public class EnemyController : MonoBehaviour
         if(currentHealth <= 0)
         {
             RewardGold();
+            maxHealth = maxHealth + difficultyRamp;
             gameObject.SetActive(false);
         }
     }
@@ -67,17 +69,28 @@ public class EnemyController : MonoBehaviour
     {
         path.Clear();
 
-        GameObject[] waypoints = GameObject.FindGameObjectsWithTag("Path");
+        GameObject parent = GameObject.FindGameObjectWithTag("Path");
 
-        foreach(GameObject waypoint in waypoints)
+        foreach(GameObject child in parent.transform)
         {
-            path.Add(waypoint.GetComponent<Waypoint>());
+            Waypoint waypoint = child.GetComponent<Waypoint>();
+
+            if(waypoint != null)
+            {
+                path.Add(waypoint);
+            }            
         }
     }
 
     void GoToStart()
     {
         transform.position = path[0].transform.position;
+    }
+
+    void FinishPath()
+    {
+        StealGold();
+        gameObject.SetActive(false);
     }
 
     IEnumerator FollowPath()
@@ -98,7 +111,6 @@ public class EnemyController : MonoBehaviour
             }            
         }
 
-        StealGold();
-        gameObject.SetActive(false);
+        FinishPath();
     }
 }
